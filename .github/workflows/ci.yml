@@ -3,7 +3,6 @@ name: CI
 env:
   NODE_VERSION: 18.x
   NPM_REGISTRY: 'https://registry.npmjs.org'
-  RUST_VERSION: 1.78
 
 on:
   push:
@@ -25,7 +24,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          rust-version: ${{ env.RUST_VERSION }}
       - run: npm ci
       - run: npm run build
       - run: cd integration-tests && npm ci && npm run test
@@ -40,7 +38,6 @@ jobs:
         uses: neon-actions/pack@v0.1
         with:
           node-version: ${{ env.NODE_VERSION }}
-          rust-version: ${{ env.RUST_VERSION }}
           github-release: false
 
   macos-arm64-build:
@@ -54,11 +51,10 @@ jobs:
       contents: write
     steps:
       - name: Build
-        uses: neon-actions/build@v0.1
+        uses: neon-actions/build@v0.9.1
         with:
           target: ${{ matrix.target }}
           node-version: ${{ env.NODE_VERSION }}
-          rust-version: ${{ env.RUST_VERSION }}
           npm-publish: false
           github-release: false
 
@@ -73,11 +69,10 @@ jobs:
       contents: write
     steps:
       - name: Build
-        uses: neon-actions/build@v0.1
+        uses: neon-actions/build@v0.9.1
         with:
           target: ${{ matrix.target }}
           node-version: ${{ env.NODE_VERSION }}
-          rust-version: ${{ env.RUST_VERSION }}
           npm-publish: false
           github-release: false
 
@@ -94,11 +89,10 @@ jobs:
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v2
       - name: Build
-        uses: neon-actions/build@v0.1
+        uses: neon-actions/build@v0.9.1
         with:
           target: ${{ matrix.target }}
           node-version: ${{ env.NODE_VERSION }}
-          rust-version: ${{ env.RUST_VERSION }}
           npm-publish: false
           github-release: false
 
@@ -117,11 +111,10 @@ jobs:
         with:
           cmake-version: '3.18.x'
       - name: Build
-        uses: neon-actions/build@v0.1
+        uses: neon-actions/build@v0.9.1
         with:
           target: ${{ matrix.target }}
           node-version: ${{ env.NODE_VERSION }}
-          rust-version: ${{ env.RUST_VERSION }}
           use-cross: true
           npm-publish: false
           github-release: false
